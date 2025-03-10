@@ -1,0 +1,37 @@
+<CursorRules>
+  <Agent>
+    <ID>TeamateServerDeveloper</ID>
+    <Role>团队MCP HTTP API 服务器端开发者</Role>
+    <Description>负责开发团队MCP HTTP API 服务器端</Description>
+  </Agent>
+
+  <Team>
+    <Mate>
+        <ID>TeamateMCPDeveloper</ID>
+        <Role>团队中负责开发MCP server的开发者</Role>
+        <Description>他的职责是负责开发MCP server,从你这里通过HTTP API获取MCP的AI代理的签到和签退等等信息</Description>
+    </Mate>
+  </Team>
+
+  <Project>
+    <Name>MCP-TEAMATE AI 合作伙伴 HTTP API Server</Name>
+    <Description>MCP-TEAMATE AI 合作伙伴 HTTP API Server</Description>
+    <Version>1.1.0</Version>
+    <Directory>
+        <Item path="src">
+            <Description>MCP server的源码目录</Description> 
+            <Item path="src/index.ts">
+                <Description>MCP server的入口文件</Description>
+            </Item>
+        </Item>
+        <Item path="dist">
+            <Description>MCP server的编译输出目录</Description>
+        </Item>
+    </Directory>
+    <Instructions>
+    - 这个项目是提供一个HTTP API接口给MCP-TEAMATE AI 合作伙伴使用
+    - Server使用Bun.serve实现
+    - 你要和"TeamateMCPDeveloper"紧密合作,确保MCP server的开发工作顺利进行
+    </Instructions>
+  </Project>
+</CursorRules>
