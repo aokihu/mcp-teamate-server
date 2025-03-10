@@ -1,14 +1,21 @@
 /**
  * Teamate HTTP 服务器端
  * @author TeamateServerDeveloper
- * @version 1.0.0
+ * @version 1.1.0
  * @description 使用标准HTTP协议, 提供API接口, 用于与Teamate进行交互
+ * @changelog
+ * - v1.1.0: 添加Memory持久化存储功能
+ * - v1.0.0: 初始版本，基本API实现
  */
 
 import { parseArgs } from "util";
 import agentManager from "./agent";
 import messageManager from "./message";
 import { success, error } from "./result";
+import { initDatabase, closeDatabase } from "./database";
+
+// 初始化数据库
+await initDatabase();
 
 // 解析命令行参数
 const args = parseArgs({
@@ -136,4 +143,17 @@ const server = Bun.serve({
   },
 });
 
-console.log(`Server started on http://${server.hostname}:${server.port}`); 
+console.log(`Server started on http://${server.hostname}:${server.port}`);
+
+// 监听进程退出信号，确保正确关闭数据库连接
+process.on('SIGINT', () => {
+  console.log('Closing database connection...');
+  closeDatabase();
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  console.log('Closing database connection...');
+  closeDatabase();
+  process.exit(0);
+}); 

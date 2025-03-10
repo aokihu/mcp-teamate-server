@@ -7,6 +7,8 @@ interface Agent {
   memory?: string;
 }
 
+import { readMemory, writeMemory } from './database';
+
 class AgentManager {
   private agents: Map<string, Agent> = new Map();
 
@@ -53,18 +55,14 @@ class AgentManager {
    * 写入代理记忆
    */
   writeMemory(id: string, memory: string) {
-    const agent = this.agents.get(id);
-    if (agent) {
-      agent.memory = memory;
-      this.agents.set(id, agent);
-    }
+    writeMemory(id, memory);
   }
 
   /**
    * 获取代理记忆
    */
-  getMemory(id: string) {
-    return this.agents.get(id)?.memory;
+  getMemory(id: string): string | null {
+    return readMemory(id);
   }
 }
 
