@@ -1,3 +1,6 @@
+import { omits } from '../libs/functional';
+
+
 interface Message {
   id: string;
   sender: string;
@@ -43,11 +46,13 @@ class MessageManager {
 
   /**
    * 通过接收者获取消息
+   * 返回的消息只包含id, sender, content, type, timestamp, 不包含content
    */
   getMessagesByReceiver(receiver: string) {
     return Array.from(this.messages.values())
       .filter(msg => msg.receiver === receiver)
-      .sort((a, b) => b.timestamp - a.timestamp);
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .map(x => omits(x, 'content'));
   }
 
   /**

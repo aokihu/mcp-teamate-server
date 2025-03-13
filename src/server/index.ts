@@ -97,10 +97,23 @@ const server = Bun.serve({
       GET: async (req) => {
         const url = new URL(req.url);
         const receiver = url.searchParams.get("receiver");
+        const mode = url.searchParams.get("mode");
+
         if (!receiver) {
           return Response.json(error("Missing receiver parameter"));
         }
         const messages = messageManager.getMessagesByReceiver(receiver);
+
+        // 根据mode过滤消息
+        if(mode === 'unread') {
+          return Response.json(success(messages.filter((message) => !message.read)));
+        }
+        // 根据mode过滤消息
+        if(mode === 'read') {
+          return Response.json(success(messages.filter((message) => message.read)));
+        }
+
+        // 默认mode就是发送所有的消息
         return Response.json(success(messages));
       },
       // 发送消息
